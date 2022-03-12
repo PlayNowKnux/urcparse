@@ -1,6 +1,12 @@
-import urcparse, pydub
+import urcparse, pydub, sys
 
-data = urcparse.parse(open("Hana Kagerou.urc", "r").read())
+version = 1
+
+args = sys.argv
+
+data = urcparse.parse(open(args[1], "r").read())
+
+print("URC to Audio Compiler v" + str(version))
 
 exportf = data.metadata["ExportFile"]
 music = pydub.AudioSegment.from_file(data.metadata["BaseFile"])

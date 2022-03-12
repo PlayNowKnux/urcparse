@@ -25,6 +25,12 @@ start
 r, m, apply
 ```
 
+## Beat notation
+### Simple 4/4 tempo
+
+`<bar>,<beat>`
+
+
 ## Metadata block
 
 ### `meta`
@@ -33,10 +39,10 @@ Adds metadata to the file, can be used to change compilation settings.
 
 Syntax:
 
-`meta <Key> <Value>`
+`meta <key> <value>`
 
-* `Key` is the key of the metadata. It cannot have spaces.
-* `Value` is what goes into `Key`. It can have spaces.
+* `key` is the key of the metadata. It cannot have spaces.
+* `value` is the value that goes into `key`. It can have spaces.
 
 
 Usage:
@@ -93,7 +99,7 @@ Syntax:
 Usage:
 
 ```URC
-off fb 148352:
+off fb 1485:
 	ts 3/4
 	
 	// Set the tempo to 150 beats per minute
@@ -114,10 +120,59 @@ Syntax:
 Usage:
 
 ```URC
-off fb 148352:
+off fb 1485:
     // Set the time signature to 3/4
     ts 3/4
     bpm 150
 #
 ```
 ---
+
+### `soff`
+
+Sets the offset for a specific sound, kind of like `off`.
+
+Syntax:
+
+`soff <sound> <offsetType> <offset>`
+
+* `sound` is the sound that is being offset
+* `type` can either be `fb` (`start` is a beat) or `st` (`start` is relative to the start of the sound
+  \[not implemented as of March 9, 2022\]).
+* `offset` is the offset in milliseconds.
+
+Usage:
+
+```URC
+soff ohhhh_clap_clap.wav fb 4000
+
+start
+
+// Now the first clap is on the beat!
+r 2,0 ohhhh_clap_clap.wav
+```
+---
+
+### `start`
+Marks the end of the metadata block and marks the start of the cue block.
+
+Syntax:
+
+`start`
+
+Usage:
+
+```URC
+off fb 3800:
+	bpm 200
+#
+
+// The metadata block ends...
+start
+// and the cue block begins!
+
+r 0,0 ding.wav
+```
+
+---
+## Cue block
